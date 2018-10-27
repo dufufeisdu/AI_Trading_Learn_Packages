@@ -30,19 +30,18 @@ def BFS(adj_matrix):
 
     for i in size:
         if adj_matrix[0][i] == 1:
-            que.append(i)
+            que.append((i, 1))
             visited[i] = True
-    level = 1
     while que:
         poped = que[0]
+        level = poped[1]
         del que[0]
-        if poped == size - 1:
+        if poped[0] == size - 1:
             return level
 
-        if not visited[poped]:
-            visited[poped] = True
-            level += 1
+        if not visited[poped[0]]:
+            visited[poped[0]] = True
             for j in size:
                 if adj_matrix[j] == 1 and not visited[j]:
-                    que.append(j)
+                    que.append((j, level + 1))
     return -1
