@@ -11,7 +11,8 @@ def create_adj_matirx(word_dic):
     for word1 in word_dic:
         line_vec = []
         for word2 in word_dic:
-            line_vec.append(int(distance(word1, word2) == 1))
+            item = [int(distance(word1, word2) == 1), -1]
+            line_vec.append(item)
         adj_matrix.append(line_vec)
     return adj_matrix
 
@@ -45,3 +46,20 @@ def BFS(adj_matrix):
                 if adj_matrix[j] == 1 and not visited[j]:
                     que.append((j, level + 1))
     return -1
+
+
+def find_path(mx, sw, ew, word_dic):
+    path = []
+    word_dic = sw + word_dic
+    word_dic = word_dic + ew
+    if mx[-1][-1][1] != -1:
+        path.append(word_dic[-1])
+        row = len(mx)
+        col = len(mx)
+        origin_num = mx[row][col][1]
+        while origin_num != -1:
+            origin_num = mx[row][col][1]
+            path.append(word_dic[origin_num])
+            col = row
+            row = origin_num
+    return path
