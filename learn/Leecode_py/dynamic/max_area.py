@@ -58,9 +58,40 @@ def max_area(arr):
     return ret
 
 
+def max_area_mine(arr):
+    if not arr:
+        return 0
+
+    m = len(arr)
+    n = len(arr[0])
+    H = [0] * n
+    L = [0] * n
+    R = [n] * n
+    ret = 0
+    for i in range(m):
+        left = 0
+        right = n
+        for j in range(n):
+            if arr[i][j] == 1:
+                H[j] += 1
+                L[j] = left
+            else:
+                H[j] = 0
+                L[j] = 0
+                R[j] = n
+                left = j + 1
+        for k in range(n - 1, -1, -1):
+            if arr[i][k] == 1:
+                R[k] = right
+                ret = max(ret, H[k] * (R[k] - L[k]))
+            else:
+                right = k + 1
+    return ret
+
+
 if __name__ == "__main__":
     test = [[1, 0, 1, 1, 1],
-            [1, 0, 1, 1, 0],
+            # [1, 0, 1, 1, 0],
             # [1, 0, 1, 1, 1],
             # [1, 0, 1, 1, 0],
             # [0, 0, 0, 1, 0]
