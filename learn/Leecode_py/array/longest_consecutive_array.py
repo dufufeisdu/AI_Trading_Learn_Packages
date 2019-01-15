@@ -10,12 +10,14 @@ def longest_consecutive_array(arr):
             if hash_table[ele - 1] != 1:
                 break
             hash_table[element] += 1
+            hash_table[ele - 1] = hash_table[element]
             ele -= 1
         ele = element
         while ele + 1 in hash_table:
             if hash_table[ele + 1] != 1:
                 break
             hash_table[element] += 1
+            hash_table[ele + 1] = hash_table[element]
             ele += 1
         max_len = max(max_len, hash_table[element])
     return max_len
