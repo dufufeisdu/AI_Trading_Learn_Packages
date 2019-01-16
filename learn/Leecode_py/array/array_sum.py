@@ -32,7 +32,44 @@ def three_sum(arr):
     return all_arr
 
 
+def three_sum_closest(arr, target):
+    """1 sort the array
+       2 for each element except for itself,
+       go through the sorted array from the start and the end,
+       find the sum of two element closest to 0
+    """
+    length = len(arr)
+    if length < 3:
+        return None
+    arr = sorted(arr)
+    res = [arr[0], arr[1], arr[2]]
+    closest = abs(arr[0] + arr[1] + arr[2] - target)
+
+    for idx, one in enumerate(arr[:length // 2]):
+        start = 0
+        end = len(arr) - 1
+        while start != end:
+            if start == idx:
+                start += 1
+                continue
+            else:
+                gap = one + arr[start] + arr[end] - target
+                if abs(gap) < closest:
+                    closest = abs(gap)
+                    res = [one, arr[start], arr[end]]
+                if gap > 0:
+                    end -= 1
+                elif gap == 0:
+                    return [one, arr[start], arr[end]]
+                else:
+                    start += 1
+    return res
+
+
 if __name__ == "__main__":
-    tests = [[-1, 0, 1, 2, -1, 4], [1, 1, -2]]
+    tests = [[-1, 0, 1, 2, -1, 4], [1, 1, -2], [-1, 2, 1, -4]]
     for test in tests:
         print(test, '--->', three_sum(test))
+
+    for test in tests:
+        print(test, '--->', three_sum_closest(test, 1))
